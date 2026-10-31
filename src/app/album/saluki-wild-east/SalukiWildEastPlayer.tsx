@@ -1,34 +1,34 @@
-
 "use client";
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import {
-  Play,
-  Pause,
-  SkipBack,
-  SkipForward,
-} from "lucide-react";
+import { Play, Pause, SkipBack, SkipForward } from "lucide-react";
 
 import { albums } from "@/data/album";
+
+type Album = (typeof albums)[number];
 
 export default function WildEastPlayer() {
   const album = albums.find(
     (item) => item.id === "saluki-wild-east"
   );
 
+  if (!album) {
+    return <p>Альбом не найден</p>;
+  }
+
+  return <Player album={album} />;
+}
+
+function Player({ album }: { album: Album }) {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const [activeTrack, setActiveTrack] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-
-  if (!album) {
-    return <p>Альбом не найден</p>;
-  }
 
   const track = album.tracks[activeTrack];
 
@@ -46,6 +46,10 @@ export default function WildEastPlayer() {
       audio.pause();
     }
   }, [activeTrack, isPlaying]);
+
+  if (!track) {
+    return <p>Трек не найден</p>;
+  }
 
   function playTrack(index: number) {
     setActiveTrack(index);
@@ -199,8 +203,6 @@ export default function WildEastPlayer() {
                 height={48}
                 sizes="48px"
                 className="size-full object-cover"
-                onLoad={() => console.log("Обложка плеера загружена")}
-    onError={() => console.error("Ошибка загрузки обложки плеера")}
               />
             </div>
 
@@ -214,7 +216,6 @@ export default function WildEastPlayer() {
               </p>
             </div>
           </div>
-          <p className="text-xs text-red-500">{album.image}</p>
 
           {/* Управление */}
 

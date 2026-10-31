@@ -1,13 +1,13 @@
-import Header from "@/components/header"
-import SalukiWildEastPlayer from "./SalukiWildEastPlayer"
+import Header from "@/components/header";
+import SalukiWildEastPlayer from "./SalukiWildEastPlayer";
 
 export default function SalukiWildEast() {
   return (
     <>
-      <Header/>
+      <Header />
       <main className="container flex-1 py-8">
-        <SalukiWildEastPlayer/>
+        <SalukiWildEastPlayer />
       </main>
     </>
-  )
+  );
 }
